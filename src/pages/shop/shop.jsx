@@ -2,15 +2,25 @@ import React, { useContext } from "react";
 import CardShop from "./card-shop/cardShop";
 import { ShopContext } from "../../context/shop-context/shopContext";
 import { Button, Empty } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const Shop = () => {
+  const navigate = useNavigate();
+
   const { state, dispatch } = useContext(ShopContext);
   const totalPrice = state.data.reduce(
     (acc, value) => (acc += value.userPrice),
     0
   );
-  if(!state.data.length){
-    return <Empty className="flex flex-col items-center justify-center h-screen"/>
+  if (!state.data.length) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <Empty className="mb-4" />
+          <Button onClick={() => navigate("/")}>Home Page</Button>
+        </div>
+      </div>
+    );
   }
   return (
     <section className="mt-10">

@@ -9,7 +9,6 @@ const Card = (value) => {
   const { state, dispatch } = useContext(ShopContext);
   let { id, title, price, oldPrice, rate, name, moth, img } = value;
   return (
-    
     <div
       className="shadow-[0_10px_30px_0_rgba(209,213,223,0.5)] p-2 
        rounded-2xl relative transition-all duration-300 hover:shadow-[0_15px_40px_0_rgba(209,213,223,0.8)] hover:scale-105 "
@@ -19,8 +18,15 @@ const Card = (value) => {
         <div
           className="absolute top-0 right-2 cursor-pointer"
           onClick={() => {
-            dispatch({ type: "like_product", data: value });
-            // toast.success("Like qilindi!");
+            const isAlreadyLiked = state.likes.some(
+              (item) => item.id === value.id
+            );
+            if (isAlreadyLiked) {
+              toast.error("Bu mahsulot allaqachon yoqtirilgan");
+            } else {
+              dispatch({ type: "like_product", data: value });
+              toast.success("Like qilindi!");
+            }
           }}
         >
           <Heart />
